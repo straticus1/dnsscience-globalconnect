@@ -1,6 +1,14 @@
-# GlobalDetect
+# GlobalConnect / GlobalDetect
 
 ISP Network Engineering Utilities - A comprehensive CLI toolkit for network engineers providing tools for IP/CIDR management, BGP analysis, DNS utilities, diagnostics, and security intelligence.
+
+## Command Names
+
+All commands below are available under these aliases (all identical):
+- `dnsscience-globalconnect` - Primary name
+- `globalconnect` - Short alias
+- `dnsscience-globaldetect` - Legacy name
+- `globaldetect` - Legacy short alias
 
 ## Features
 
@@ -227,15 +235,19 @@ See [INSTALL.md](INSTALL.md) for detailed installation instructions.
 git clone https://github.com/dnsscience/globaldetect.git
 cd globaldetect
 
-# Create virtual environment (requires Python 3.10+)
-python3 -m venv venv
+# Option 1: Virtual environment (development)
+./install.sh --venv
 source venv/bin/activate
 
-# Install in development mode
-pip install -e .
+# Option 2: System-wide installation
+./install.sh --system
+
+# Option 3: User installation (no sudo)
+./install.sh --user
 
 # Run
-globaldetect --help
+globalconnect --help
+# or: globaldetect --help
 ```
 
 ## Configuration

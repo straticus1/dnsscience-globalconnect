@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "globaldetect"
+name = "dnsscience-globalconnect"
 version = "0.1.0"
 description = "ISP Network Engineering Utilities"
 readme = "README.md"
@@ -63,11 +63,14 @@ backup = [
 ]
 
 [project.scripts]
+dnsscience-globalconnect = "globaldetect.cli:main"
+globalconnect = "globaldetect.cli:main"
+dnsscience-globaldetect = "globaldetect.cli:main"
 globaldetect = "globaldetect.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/ryan/globaldetect"
-Repository = "https://github.com/ryan/globaldetect"
+Homepage = "https://github.com/dnsscience/globalconnect"
+Repository = "https://github.com/dnsscience/globalconnect"
 
 [tool.setuptools.packages.find]
 where = ["src"]
