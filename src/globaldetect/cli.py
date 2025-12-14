@@ -39,6 +39,12 @@ from globaldetect.inventory.cli import catalog, system, switch, location, db
 from globaldetect.backup.cli import backup
 from globaldetect.backup.secrets.cli import secrets
 from globaldetect.hibp.cli import hibp
+from globaldetect.routing.cli import routing
+from globaldetect.firewall.cli import firewall
+from globaldetect.facilities.cli import facility
+from globaldetect.dhcp.cli import dhcp
+from globaldetect.netcat.cli import nc
+from globaldetect.packet.cli import packet
 
 main.add_command(ip)
 main.add_command(bgp)
@@ -67,6 +73,24 @@ main.add_command(secrets)
 
 # Have I Been Pwned integration
 main.add_command(hibp)
+
+# Routing protocol support
+main.add_command(routing)
+
+# Firewall rule parsing
+main.add_command(firewall)
+
+# Facilities / data center management
+main.add_command(facility)
+
+# DHCP client for troubleshooting
+main.add_command(dhcp)
+
+# Netcat with encryption support
+main.add_command(nc)
+
+# Packet crafting and protocol testing
+main.add_command(packet)
 
 # Agent and server commands (added dynamically)
 from globaldetect.inventory.agent import add_agent_commands

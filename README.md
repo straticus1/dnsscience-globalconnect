@@ -126,6 +126,96 @@ Full network asset inventory and catalog system supporting SQLite (default) and 
 - **run** - Start REST API server for agent check-ins
 - **generate-key** - Generate API keys for agents
 
+### Device Config Backup (`globaldetect backup`)
+- **run** - Run backup job for configured devices
+- **status** - Show backup job status
+- **restore** - Restore configuration to device
+- **list** - List available backups
+
+Supports: Cisco IOS/IOS-XE/NX-OS, Juniper JunOS, Palo Alto PAN-OS, FortiGate, Arista EOS, A10, F5 BIG-IP.
+
+### Secrets Management (`globaldetect secrets`)
+- **get** - Retrieve a secret
+- **set** - Store a secret
+- **list** - List secrets
+- **delete** - Remove a secret
+- **mfa** - MFA operations (TOTP, S/KEY, RADIUS)
+
+Multi-backend support: SQLite, PostgreSQL, Aurora, RDS, Lyft Confidant.
+
+### Have I Been Pwned (`globaldetect hibp`)
+- **email** - Check if email has been in breaches
+- **password** - Check password exposure (k-anonymity, safe)
+- **breaches** - List all known breaches
+- **breach** - Get details about specific breach
+- **pastes** - Check paste appearances
+
+### Facilities / Data Centers (`globaldetect facility`)
+- **sync** - Sync facility data from PeeringDB
+- **search** - Search facilities by name, owner, location
+- **show** - Show facility details with carriers/networks
+- **list** - List facilities with filtering
+- **tiers** - Show facilities by tier classification
+- **carriers** - List carriers at a facility
+- **networks** - List networks present at a facility
+
+**Features:**
+- 5,800+ global facilities from PeeringDB
+- Tier classification (1-4) based on network presence
+- Region filtering: NA, SA, EU, APAC, MEA
+- Search by CLLI code, site code, owner, country, state
+- Automated sync via cron (every 6 hours)
+
+### DHCP Client (`globaldetect dhcp`)
+- **discover** - Send DHCP discover and show offers
+- **obtain** - Obtain a DHCP lease
+- **release** - Release a DHCP lease
+- **inform** - Send DHCP inform for configuration
+- **servers** - Discover DHCP servers on network
+
+**Features:**
+- Full DORA process with verbose debugging
+- Option 82 (Relay Agent) parsing
+- PXE boot option support
+- Troubleshooting mode for DHCP/relay/PXE issues
+
+### Netcat (`globaldetect nc`)
+- **connect** - Connect to remote host
+- **listen** - Listen for incoming connections
+- **scan** - Port scan a host
+
+**Encryption modes:** `--encrypt yes|no|auto`
+- `yes` - Force TLS encryption
+- `no` - Plaintext only
+- `auto` - Try TLS, fall back to plaintext
+
+### Packet Crafting (`globaldetect packet`)
+- **protocols** - List available protocol templates
+- **ntp** - Test NTP servers
+- **ping** - ICMP ping (with TCP fallback)
+- **tcp** - TCP connection test with banner grab
+- **syn-scan** - TCP SYN scan (requires scapy + root)
+- **arp-scan** - ARP discovery scan (requires scapy + root)
+
+**Features:**
+- Pre-built protocol templates (ICMP, TCP, UDP, ARP, DNS, NTP, HTTP)
+- Works without scapy for basic operations
+- Advanced scanning with scapy when available
+
+### Routing Protocols (`globaldetect routing`)
+- **bgp** - BGP session management
+- **ospf** - OSPF neighbor discovery
+- **isis** - IS-IS adjacency monitoring
+- **routes** - Route table analysis
+
+### Firewall Rules (`globaldetect firewall`)
+- **parse** - Parse firewall rules from config
+- **analyze** - Analyze rules for conflicts/shadows
+- **convert** - Convert between formats
+- **export** - Export rules to CSV/JSON
+
+Supports: Cisco ASA, Palo Alto, Juniper SRX, FortiGate.
+
 ## Installation
 
 See [INSTALL.md](INSTALL.md) for detailed installation instructions.
@@ -265,6 +355,67 @@ globaldetect agent run --config /etc/globaldetect/agent.conf
 globaldetect server run                               # Start on port 8080
 globaldetect server run --port 9000 --db postgresql://localhost/inventory
 globaldetect server generate-key                      # Generate agent API key
+
+# Device Config Backup
+globaldetect backup run --device router01             # Backup single device
+globaldetect backup run --group core-routers          # Backup device group
+globaldetect backup list --device router01            # List backups
+globaldetect backup restore --device router01 --version latest
+
+# Secrets Management
+globaldetect secrets set myapp/db_password "secret123"
+globaldetect secrets get myapp/db_password
+globaldetect secrets list --prefix myapp/
+globaldetect secrets mfa totp generate --issuer MyApp --account user@example.com
+
+# Have I Been Pwned
+globaldetect hibp email user@example.com              # Check email breaches
+globaldetect hibp password                            # Check password (prompted)
+globaldetect hibp breaches                            # List all breaches
+globaldetect hibp breach "LinkedIn"                   # Get breach details
+
+# Facilities / Data Centers
+globaldetect facility sync                            # Sync from PeeringDB
+globaldetect facility search "Equinix"                # Search by name
+globaldetect facility list --country US --tier 1     # Tier 1 US facilities
+globaldetect facility list --region NA --tier 2      # Tier 2 North America
+globaldetect facility show 1234                       # Show facility details
+globaldetect facility tiers --region EU               # Facilities by tier in Europe
+globaldetect facility carriers 1234                   # Carriers at facility
+globaldetect facility networks 1234                   # Networks at facility
+
+# DHCP Client (requires root/sudo)
+sudo globaldetect dhcp discover -i eth0              # Discover DHCP servers
+sudo globaldetect dhcp obtain -i eth0 --verbose      # Get lease with debug output
+sudo globaldetect dhcp release -i eth0               # Release lease
+sudo globaldetect dhcp servers                       # List DHCP servers on network
+
+# Netcat with Encryption
+globaldetect nc connect example.com 443 --encrypt yes    # TLS connection
+globaldetect nc connect example.com 80 --encrypt no      # Plaintext
+globaldetect nc connect example.com 443 --encrypt auto   # Try TLS, fallback
+globaldetect nc listen 8080 --encrypt yes                # TLS server
+globaldetect nc scan example.com 1-1000                  # Port scan
+
+# Packet Crafting & Protocol Testing
+globaldetect packet protocols                         # List protocol templates
+globaldetect packet ntp time.google.com              # Test NTP server
+globaldetect packet ntp --pool google                # Test Google NTP pool
+globaldetect packet ntp --all-pools                  # Test all known NTP servers
+globaldetect packet ping example.com -c 5            # Ping 5 times
+globaldetect packet tcp example.com 443              # TCP connect test
+sudo globaldetect packet syn-scan example.com 22,80,443  # SYN scan (requires root)
+sudo globaldetect packet arp-scan 192.168.1.0/24    # ARP scan (requires root)
+
+# Routing Protocols
+globaldetect routing bgp neighbors                   # Show BGP neighbors
+globaldetect routing ospf neighbors                  # Show OSPF neighbors
+globaldetect routing routes --protocol bgp           # Show BGP routes
+
+# Firewall Rules
+globaldetect firewall parse config.txt --vendor cisco
+globaldetect firewall analyze config.txt --check shadows
+globaldetect firewall export config.txt --format csv
 ```
 
 ## Requirements

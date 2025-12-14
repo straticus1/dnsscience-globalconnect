@@ -3,6 +3,7 @@ Vendor-specific configuration collectors.
 
 Supported vendors:
 - Network: Cisco (IOS/NX-OS/ASA), Palo Alto, Juniper, FortiNet, iptables
+- Load Balancers: F5 BIG-IP, A10 Thunder
 - DNS: InfoBlox, BlueCat, Men and Mice
 - Proxy: BlueCoat
 
@@ -23,6 +24,8 @@ from globaldetect.backup.collectors.infoblox import InfobloxCollector
 from globaldetect.backup.collectors.bluecat import BlueCatCollector
 from globaldetect.backup.collectors.menandmice import MenAndMiceCollector
 from globaldetect.backup.collectors.bluecoat import BlueCoatCollector
+from globaldetect.backup.collectors.f5 import F5BigIPCollector
+from globaldetect.backup.collectors.a10 import A10ThunderCollector
 
 from globaldetect.backup.models import DeviceVendor
 
@@ -42,6 +45,8 @@ COLLECTOR_MAP = {
     DeviceVendor.BLUECAT: BlueCatCollector,
     DeviceVendor.MEN_AND_MICE: MenAndMiceCollector,
     DeviceVendor.BLUECOAT: BlueCoatCollector,
+    DeviceVendor.F5_BIGIP: F5BigIPCollector,
+    DeviceVendor.A10_THUNDER: A10ThunderCollector,
 }
 
 
@@ -71,6 +76,8 @@ __all__ = [
     "BlueCatCollector",
     "MenAndMiceCollector",
     "BlueCoatCollector",
+    "F5BigIPCollector",
+    "A10ThunderCollector",
     "COLLECTOR_MAP",
     "get_collector_class",
 ]

@@ -82,6 +82,74 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+#### Facilities / Data Center Management (`globaldetect facility`)
+- PeeringDB API integration for global data center information
+- 5,800+ facilities with carrier and network presence data
+- Tier classification (1-4) based on network presence count
+- Region filtering (NA, SA, EU, APAC, MEA)
+- Search by CLLI code, site code, owner, country, state
+- SQLite caching with incremental sync
+- Automated sync via cron (every 6 hours)
+
+#### DHCP Client (`globaldetect dhcp`)
+- Full DHCP DORA process (Discover-Offer-Request-Ack)
+- DHCP lease obtain, release, and renew operations
+- Option 82 (Relay Agent Information) parsing for debugging
+- PXE boot option support and display
+- Verbose debugging mode for troubleshooting
+- DHCP server discovery on network
+
+#### Netcat with Encryption (`globaldetect nc`)
+- Full netcat functionality with TLS/SSL support
+- Encryption modes: yes (force TLS), no (plaintext), auto (try TLS, fallback)
+- Client connect mode with send/receive
+- Server listen mode for incoming connections
+- Port scanning capability
+- UDP support
+
+#### Packet Crafting & Protocol Testing (`globaldetect packet`)
+- User-friendly packet crafting with pre-built templates
+- Protocol listing with requirements and parameters
+- NTP server testing (works without scapy)
+- Ping with ICMP and TCP fallback
+- TCP connection testing with banner grab
+- SYN scan (half-open scan, requires scapy + root)
+- ARP scan for local network discovery (requires scapy + root)
+- Support for ICMP, TCP, UDP, ARP, DNS protocol templates
+
+#### Routing Protocol Support (`globaldetect routing`)
+- BGP session management and monitoring
+- OSPF neighbor discovery and LSA parsing
+- IS-IS adjacency monitoring
+- Route table analysis
+
+#### Firewall Rule Parsing (`globaldetect firewall`)
+- Multi-vendor firewall rule parsing
+- Support for Cisco ASA, Palo Alto, Juniper SRX, FortiGate
+- Rule analysis and conflict detection
+- ACL to object-group conversion
+
+#### Device Config Backup Collectors
+- A10 load balancer backup collector
+- F5 BIG-IP backup collector
+- Extended backup framework support
+
+#### Have I Been Pwned Integration (`globaldetect hibp`)
+- Email breach checking (requires API key)
+- Password checking with k-anonymity (no API key needed)
+- Batch email/password checking
+- Breach database queries
+- Paste appearance checking
+
+#### Secrets Management (`globaldetect secrets`)
+- Multi-backend secrets storage (SQLite, PostgreSQL, Aurora, RDS)
+- Lyft Confidant integration with fallback support
+- MFA support (TOTP, S/KEY, RADIUS, RSA SecurID, Azure MFA)
+- SSH key generation and management
+- Unix password file generation
+
+### Changed
 - CDP (Cisco Discovery Protocol) v2 neighbor discovery
 - LLDP (Link Layer Discovery Protocol) neighbor discovery
 - Combined listener for simultaneous CDP/LLDP capture

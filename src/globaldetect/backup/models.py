@@ -40,6 +40,10 @@ class DeviceVendor(str, Enum):
     JUNIPER_SCREENOS = "juniper_screenos"  # Legacy Netscreen
     FORTINET = "fortinet"
 
+    # Load balancers / ADC
+    F5_BIGIP = "f5_bigip"  # F5 BIG-IP (LTM, GTM/DNS)
+    A10_THUNDER = "a10_thunder"  # A10 Thunder ADC
+
     # DNS appliances
     INFOBLOX = "infoblox"
     BLUECAT = "bluecat"
