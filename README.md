@@ -54,6 +54,21 @@ Supported providers include: Spamhaus, Barracuda, SpamCop, SORBS, UCEProtect, Pr
 - **lldp** - Listen for LLDP (Link Layer Discovery Protocol) frames
 - **interfaces** - List available network interfaces
 
+### Packet Capture & Analysis (`globaldetect cap`)
+- **capture** - Capture traffic (DNS, SMTP, SSL, BGP, ICMP, etc.)
+- **analyze** - Analyze pcap files for L2/L3 issues, protocol errors
+- **live** - Real-time packet capture and display
+- **protocols** - List available capture filters
+
+Detects: broadcast storms, ARP anomalies, STP issues, ICMP errors, TCP retransmissions, DNS failures, SSL/TLS problems, SMTP errors.
+
+### HTTP Testing (`globaldetect http`)
+- **request** - Full-featured HTTP client with JSON/XML support
+- **get/post** - Quick HTTP method shortcuts
+- **validate** - Test endpoints against expected responses
+- **bench** - Simple HTTP benchmark/load test
+- **headers** - Inspect response headers and security headers
+
 ### External Services (`globaldetect services`)
 - **ipinfo** - IPInfo.io lookup
 - **abuse** - AbuseIPDB reputation check
@@ -136,6 +151,21 @@ sudo globaldetect neighbors discover           # Listen for CDP and LLDP
 sudo globaldetect neighbors cdp -i eth0        # CDP only on eth0
 sudo globaldetect neighbors lldp -t 60         # LLDP with 60s timeout
 globaldetect neighbors interfaces              # List available interfaces
+
+# Packet Capture & Analysis (requires root/sudo)
+sudo globaldetect cap capture dns -t 5m        # Capture DNS traffic for 5 minutes
+sudo globaldetect cap capture email -t 10m -o email.pcap
+sudo globaldetect cap analyze -f capture.pcap  # Analyze for network issues
+sudo globaldetect cap live icmp -t 30s         # Live ICMP monitoring
+globaldetect cap protocols                     # List available capture filters
+
+# HTTP Testing
+globaldetect http get https://api.example.com/users
+globaldetect http post https://api.example.com/data --json '{"key": "value"}'
+globaldetect http request https://api.example.com -H "Authorization: Bearer token"
+globaldetect http validate https://api.example.com/health --status 200
+globaldetect http bench https://api.example.com -n 100 -c 10
+globaldetect http headers https://www.example.com
 ```
 
 ## Requirements

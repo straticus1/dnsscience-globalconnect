@@ -152,3 +152,15 @@ Thumbs.db
 
 # Project-specific
 *.log
+*.pcap
+*.cap
+
+# API keys and credentials - NEVER commit these
+.env*
+!.env.example
+credentials.json
+secrets.json
+*.key
+*.pem
+api_keys.txt
+config.local.py

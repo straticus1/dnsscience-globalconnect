@@ -33,6 +33,8 @@ from globaldetect.recon.cli import recon
 from globaldetect.rbl.cli import rbl
 from globaldetect.darkweb.cli import darkweb
 from globaldetect.neighbors.cli import neighbors
+from globaldetect.cap.cli import cap
+from globaldetect.http.cli import http
 
 main.add_command(ip)
 main.add_command(bgp)
@@ -43,6 +45,8 @@ main.add_command(recon)
 main.add_command(rbl)
 main.add_command(darkweb)
 main.add_command(neighbors)
+main.add_command(cap)
+main.add_command(http)
 
 
 if __name__ == "__main__":
