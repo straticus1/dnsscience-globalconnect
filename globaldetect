@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+"""
+GlobalDetect - ISP Network Engineering Utilities
+
+This wrapper script allows running globaldetect without installation.
+For installed usage, use: globaldetect <command>
+"""
+
+import sys
+import os
+
+# Add src directory to path for development use
+script_dir = os.path.dirname(os.path.abspath(__file__))
+src_dir = os.path.join(script_dir, "src")
+if os.path.exists(src_dir):
+    sys.path.insert(0, src_dir)
+
+# Load environment variables from common locations
+try:
+    from dotenv import load_dotenv
+    from pathlib import Path
+
+    # Check for .env in common locations
+    env_locations = [
+        Path(script_dir) / ".env",
+        Path.home() / ".globaldetect" / ".env",
+        Path.home() / ".config" / "globaldetect" / ".env",
+        # Also check dnsscience.io for API keys during development
+        Path.home() / "development" / "dnsscience.io" / ".env.production",
+    ]
+
+    for env_path in env_locations:
+        if env_path.exists():
+            load_dotenv(env_path)
+            break
+except ImportError:
+    pass
+
+from globaldetect.cli import main
+
+if __name__ == "__main__":
+    main()
