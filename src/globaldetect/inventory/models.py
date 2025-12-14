@@ -414,10 +414,28 @@ class System:
     tags: list[str] = field(default_factory=list)
     custom_fields: dict[str, Any] = field(default_factory=dict)
 
-    # Owner/contact
+    # Applications running on this system
+    applications: list[str] = field(default_factory=list)  # e.g., ["nginx", "postgresql", "redis"]
+    application_details: dict[str, Any] = field(default_factory=dict)  # Detailed app info
+
+    # Owner/contact - Team ownership
     owner: str | None = None  # Team or person responsible
+    owner_group: str | None = None  # Group/department that owns this system
+    owner_group_id: str | None = None  # Group ID in external system
     contact_email: str | None = None
+    contact_phone: str | None = None
+    contact_slack: str | None = None  # Slack channel or user
+    contact_pagerduty: str | None = None  # PagerDuty service/escalation
     cost_center: str | None = None
+    business_unit: str | None = None
+
+    # Support information
+    support_tier: str | None = None  # e.g., "tier1", "tier2", "critical"
+    support_hours: str | None = None  # e.g., "24x7", "business_hours"
+    support_team: str | None = None  # Team responsible for support
+    support_email: str | None = None
+    support_phone: str | None = None
+    escalation_policy: str | None = None  # How to escalate issues
 
     # Timestamps
     created_at: datetime | None = None
@@ -480,10 +498,26 @@ class System:
             "notes": self.notes,
             "tags": self.tags,
             "custom_fields": self.custom_fields,
+            # Applications
+            "applications": self.applications,
+            "application_details": self.application_details,
             # Owner/contact
             "owner": self.owner,
+            "owner_group": self.owner_group,
+            "owner_group_id": self.owner_group_id,
             "contact_email": self.contact_email,
+            "contact_phone": self.contact_phone,
+            "contact_slack": self.contact_slack,
+            "contact_pagerduty": self.contact_pagerduty,
             "cost_center": self.cost_center,
+            "business_unit": self.business_unit,
+            # Support
+            "support_tier": self.support_tier,
+            "support_hours": self.support_hours,
+            "support_team": self.support_team,
+            "support_email": self.support_email,
+            "support_phone": self.support_phone,
+            "escalation_policy": self.escalation_policy,
             # Timestamps
             "created_at": self.created_at.isoformat() if self.created_at else None,
             "updated_at": self.updated_at.isoformat() if self.updated_at else None,
@@ -551,10 +585,26 @@ class System:
             notes=data.get("notes"),
             tags=data.get("tags", []),
             custom_fields=data.get("custom_fields", {}),
+            # Applications
+            applications=data.get("applications", []),
+            application_details=data.get("application_details", {}),
             # Owner/contact
             owner=data.get("owner"),
+            owner_group=data.get("owner_group"),
+            owner_group_id=data.get("owner_group_id"),
             contact_email=data.get("contact_email"),
+            contact_phone=data.get("contact_phone"),
+            contact_slack=data.get("contact_slack"),
+            contact_pagerduty=data.get("contact_pagerduty"),
             cost_center=data.get("cost_center"),
+            business_unit=data.get("business_unit"),
+            # Support
+            support_tier=data.get("support_tier"),
+            support_hours=data.get("support_hours"),
+            support_team=data.get("support_team"),
+            support_email=data.get("support_email"),
+            support_phone=data.get("support_phone"),
+            escalation_policy=data.get("escalation_policy"),
             # Timestamps
             created_at=datetime.fromisoformat(data["created_at"]) if data.get("created_at") else None,
             updated_at=datetime.fromisoformat(data["updated_at"]) if data.get("updated_at") else None,
