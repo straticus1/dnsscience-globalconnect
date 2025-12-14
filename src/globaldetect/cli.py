@@ -32,6 +32,7 @@ from globaldetect.services.cli import services
 from globaldetect.recon.cli import recon
 from globaldetect.rbl.cli import rbl
 from globaldetect.darkweb.cli import darkweb
+from globaldetect.neighbors.cli import neighbors
 
 main.add_command(ip)
 main.add_command(bgp)
@@ -41,6 +42,7 @@ main.add_command(services)
 main.add_command(recon)
 main.add_command(rbl)
 main.add_command(darkweb)
+main.add_command(neighbors)
 
 
 if __name__ == "__main__":

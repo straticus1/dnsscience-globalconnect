@@ -48,6 +48,12 @@ Supported providers include: Spamhaus, Barracuda, SpamCop, SORBS, UCEProtect, Pr
 - **check** - Comprehensive dark web association check
 - **batch** - Batch Tor exit check
 
+### Neighbor Discovery (`globaldetect neighbors`)
+- **discover** - Discover neighbors using CDP and LLDP
+- **cdp** - Listen for CDP (Cisco Discovery Protocol) v2 frames
+- **lldp** - Listen for LLDP (Link Layer Discovery Protocol) frames
+- **interfaces** - List available network interfaces
+
 ### External Services (`globaldetect services`)
 - **ipinfo** - IPInfo.io lookup
 - **abuse** - AbuseIPDB reputation check
@@ -124,6 +130,12 @@ globaldetect rbl batch 1.2.3.4 5.6.7.8
 # Dark Web Intelligence
 globaldetect darkweb tor 185.220.101.1
 globaldetect darkweb check suspicious-domain.com
+
+# Neighbor Discovery (requires root/sudo)
+sudo globaldetect neighbors discover           # Listen for CDP and LLDP
+sudo globaldetect neighbors cdp -i eth0        # CDP only on eth0
+sudo globaldetect neighbors lldp -t 60         # LLDP with 60s timeout
+globaldetect neighbors interfaces              # List available interfaces
 ```
 
 ## Requirements

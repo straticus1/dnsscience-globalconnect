@@ -81,6 +81,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- CDP (Cisco Discovery Protocol) v2 neighbor discovery
+- LLDP (Link Layer Discovery Protocol) neighbor discovery
+- Combined listener for simultaneous CDP/LLDP capture
+- Network interface enumeration
+
 ### Planned
 - Additional threat intelligence integrations
 - WHOIS lookup functionality
